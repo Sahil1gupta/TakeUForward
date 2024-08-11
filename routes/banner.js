@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const Banner=require('../models/banner-schema');
+const bannerSchemaValidate=require('../validation/bannerValidation');
+const { query,body,param,matchedData,validationResult ,checkSchema} = require('express-validator');
+
 
 
 router.get('/',async(req,res)=>{
@@ -16,7 +19,11 @@ router.get('/',async(req,res)=>{
    }
 })
 
-router.post('/',async(req,res)=>{
+router.post('/',checkSchema(bannerSchemaValidate),async(req,res)=>{
+    const errors=validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors:errors.array()})
+    }
     const {description,timer,isVisible}=req.body;
 
 
