@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const bannerSchema = new mongoose.Schema({
   description: {
@@ -8,27 +8,21 @@ const bannerSchema = new mongoose.Schema({
   timer: {
     type: Number,
     required: true,
-    min: 0,
   },
   isVisible: {
     type: Boolean,
-    default: false,
-  },
-  createAt: {
-    type: Date.now(),
     required: true,
   },
-  updateAt: {
-    type: Date.now(),
+  updatedAt: {
+    type: Date,
     required: true,
+    default: Date.now,
   },
 });
 
-bannerSchema.pre("save",function(next){
-    this.updateAt=Date.now();
-    return next();
-})
+bannerSchema.pre("save", function(next) {
+  this.updatedAt = Date.now();
+  next();
+});
 
-
-const Banner=mongoose.model("Banner", bannerSchema);
-module.exports=Banner;
+module.exports = mongoose.model('Banner', bannerSchema);

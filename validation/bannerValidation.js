@@ -1,4 +1,5 @@
 const { options } = require("../routes/banner");
+const { query,body,param,matchedData,validationResult ,checkSchema} = require('express-validator');
 
 
 const bannerSchemaValidate = {
